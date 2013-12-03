@@ -1,0 +1,34 @@
+{
+  "name": "gulp-ignore",
+  "description": "plugin for gulp to ignore files in the stream based on file characteristics",
+  "version": "0.0.1",
+  "homepage": "https://github.com/robrich/gulp-ignore",
+  "repository": "git://github.com/robrich/gulp-ignore.git",
+  "author": "Rob Richardson (http://robrich.org/)",
+  "main": "./index.js",
+  "keywords": [
+    "gulpplugin",
+    "filter",
+    "minimatch"
+  ],
+  "dependencies": {
+    "event-stream": "*",
+    "minimatch": "~0.2.12"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/robrich/gulp-ignore/raw/master/LICENSE"
+    }
+  ]
+}
