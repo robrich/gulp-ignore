@@ -5,6 +5,18 @@ gulp-ignore
 
 plugin for [gulp](https://github.com/wearefractal/gulp) to ignore files in the stream based on file characteristics
 
+Note
+----
+
+`gulp.src()` now supports multiple globs including ignore globs.  See [glob-stream](https://github.com/wearefractal/glob-stream).  In most cases, this is sufficient, removing the need for this plugin.
+
+```javascript
+gulp.task('kill-js', function() {
+  gulp.src(['./**/*.js','!./node_modules/**','!./libs/**'])
+    .pipe(something());
+});
+```
+
 Usage
 -----
 

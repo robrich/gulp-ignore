@@ -2,7 +2,7 @@
 
 "use strict";
 
-var es = require('event-stream');
+var map = require('map-stream');
 var minimatch = require('minimatch');
 
 // pattern is a minimatch pattern or a function that returns bool: skip it?
@@ -14,7 +14,7 @@ module.exports = function(opt){
 		throw new Error('pattern is not a string or array');
 	}
 
-	return es.map(function (file, cb){
+	return map(function (file, cb){
 		var i, skip = false;
 		if (opt.isDirectory && file.stat && file.stat.isDirectory()) {
 			skip = true;
