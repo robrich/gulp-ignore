@@ -1,9 +1,7 @@
-![status](https://secure.travis-ci.org/robrich/gulp-ignore.png?branch=master)
-
-gulp-ignore
+gulp-ignore ![status](https://secure.travis-ci.org/robrich/gulp-ignore.png?branch=master)
 ===========
 
-plugin for [gulp](https://github.com/wearefractal/gulp) to ignore files in the stream based on file characteristics
+Include or exclude [gulp](https://github.com/wearefractal/gulp) files from the stream based on a condition
 
 Note
 ----
@@ -20,34 +18,58 @@ gulp.task('kill-js', function() {
 Usage
 -----
 
-options arg has 3 optional properties: {
-  isFile:true, // ignore files
-  isDirectory:true, // ignore directories
-  pattern:'glob' // minimatch glob: string or array of strings, or a function that returns the answer to 'ignore this?'
-}
+Uglify everything but only copy certain things to the dist folder
 
 ```javascript
-var ignore = require('gulp-ignore');
+var exclude = require('gulp-ignore').exclude;
+var uglify = require('gulp-uglify');
 
-gulp.task('kill-js', function() {
-  gulp.src('./**/*.js')
-    .pipe(ignore({pattern:['./node_modules/**','./libs/**']}))
-    .pipe(something());
-});
-
-gulp.task('kill-css', function() {
-  gulp.src('./**/*.css')
-    .pipe(ignore({isFile:true}))
-    .pipe(something());
+gulp.task('task', function() {
+  gulp.src('./src/*.js')
+    .pipe(uglify())
+    .pipe(exclude('./libs/**'))
+    .pipe(gulp.dest('./dist/'));
 });
 ```
+
+```javascript
+var include = require('gulp-ignore').include;
+var uglify = require('gulp-uglify');
+
+gulp.task('task', function() {
+  gulp.src('./src/*.js')
+    .pipe(uglify())
+    .pipe(include('**/*.min.*'))
+    .pipe(gulp.dest('./dist/'));
+});
+```
+
+API
+---
+
+### exclude(condition)
+
+Exclude files whose `file.path` matches, include everything else
+
+### include(condition)
+
+Include files whose `file.path` matches, exclude everything else
+
+### condition
+
+Type: `boolean` or [`stat`](http://nodejs.org/api/fs.html#fs_class_fs_stats) object or `function` that takes in a vinyl file and returns a boolean or `RegularExpression` that works on the `file.path`
+
+The condition parameter is any of the conditions supported by [gulp-match](https://github.com/robrich/gulp-match).  The `file.path` is passed into `gulp-match`.
+
+If a function is given, then the function is passed a vinyl `file`. The function should return a `boolean`.
+
 
 LICENSE
 -------
 
 (MIT License)
 
-Copyright (c) 2013 [Richardson & Sons, LLC](http://richardsonandsons.com/)
+Copyright (c) 2014 [Richardson & Sons, LLC](http://richardsonandsons.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

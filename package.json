@@ -1,7 +1,7 @@
 {
   "name": "gulp-ignore",
-  "description": "plugin for gulp to ignore files in the stream based on file characteristics",
-  "version": "0.0.2",
+  "description": "Include or exclude files from the stream based on a condition",
+  "version": "1.0.0",
   "homepage": "https://github.com/robrich/gulp-ignore",
   "repository": "git://github.com/robrich/gulp-ignore.git",
   "author": "Rob Richardson (http://robrich.org/)",
@@ -9,21 +9,24 @@
   "keywords": [
     "gulpplugin",
     "filter",
-    "minimatch"
+    "minimatch",
+    "include",
+    "exclude"
   ],
   "dependencies": {
-    "map-stream": "~0.0.4",
-    "minimatch": "~0.2.12"
+    "through2": "~0.4.0",
+    "gulp-match": "~0.0.1"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "jshint": "~2.4.1",
+    "mocha": "~1.17.0",
+    "should": "~3.0.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha && jshint ./*.js && jshint ./test/*.js"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.10.0"
   },
   "licenses": [
     {

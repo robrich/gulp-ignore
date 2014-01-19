@@ -3,24 +3,22 @@
 
 "use strict";
 
-var filter = require('../');
+var exclude = require('../');
 var fs = require('fs');
 var should = require('should');
 require('mocha');
 
 describe('gulp-filter', function() {
-	describe('filter()', function() {
+	describe('exclude()', function() {
 		var tempFileContent = 'A test generated this file and it is safe to delete';
 
 		it('should pass file structure through', function(done) {
 			// Arrange
 			var tempFile = './temp.txt';
-			var tempFileShort = 'temp.txt';
 
-			var stream = filter(); // don't filter anything
+			var stream = exclude(); // don't filter anything
 			var fakeFile = {
 				path: tempFile,
-				shortened: tempFileShort,
 				contents: new Buffer(tempFileContent)
 			};
 
@@ -29,10 +27,8 @@ describe('gulp-filter', function() {
 				// Test that content passed through
 				should.exist(actualFile);
 				should.exist(actualFile.path);
-				should.exist(actualFile.shortened);
 				should.exist(actualFile.contents);
 				actualFile.path.should.equal(tempFile);
-				actualFile.shortened.should.equal(tempFileShort);
 				String(actualFile.contents).should.equal(tempFileContent);
 				done();
 			});
@@ -45,20 +41,18 @@ describe('gulp-filter', function() {
 		it('should allow non-matching file', function(done) {
 			// Arrange
 			var tempFile = './temp.txt';
-			var tempFileShort = 'temp.txt';
 			fs.writeFileSync(tempFile, tempFileContent);
 			fs.existsSync(tempFile).should.equal(true);
 			var a = 0;
 
-			var stream = filter({pattern:'./nottemp.txt'});
+			var stream = exclude('./nottemp.txt');
 			var fakeFile = {
 				path: tempFile,
-				shortened: tempFileShort,
 				contents: new Buffer(tempFileContent)
 			};
 
 			// Assert
-			stream.on('data', function(/*file*/){
+			stream.on('data', function(){
 				a++;
 			});
 			stream.once('end', function(){
@@ -74,20 +68,18 @@ describe('gulp-filter', function() {
 		it('should block matching file', function(done) {
 			// Arrange
 			var tempFile = './temp.txt';
-			var tempFileShort = 'temp.txt';
 			fs.writeFileSync(tempFile, tempFileContent);
 			fs.existsSync(tempFile).should.equal(true);
 			var a = 0;
 
-			var stream = filter({pattern:'./temp.txt'});
+			var stream = exclude('./temp.txt');
 			var fakeFile = {
 				path: tempFile,
-				shortened: tempFileShort,
 				contents: new Buffer(tempFileContent)
 			};
 
 			// Assert
-			stream.on('data', function(/*file*/){
+			stream.on('data', function(){
 				a++;
 			});
 			stream.once('end', function(){
@@ -103,13 +95,11 @@ describe('gulp-filter', function() {
 		it('should block files', function(done) {
 			// Arrange
 			var tempFile = './temp.txt';
-			var tempFileShort = 'temp.txt';
 			var a = 0;
 
-			var stream = filter({isFile:true});
+			var stream = exclude({isFile:true});
 			var fakeFile = {
 				path: tempFile,
-				shortened: tempFileShort,
 				contents: new Buffer(tempFileContent),
 				stat: {
 					isFolder: function () {
@@ -138,13 +128,11 @@ describe('gulp-filter', function() {
 		it('should block folders', function(done) {
 			// Arrange
 			var tempFile = './temp/temp.txt';
-			var tempFileShort = 'temp.txt';
 			var a = 0;
 
-			var stream = filter({isDirectory:true});
+			var stream = exclude({isDirectory:true});
 			var fakeFolder = {
 				path: tempFile,
-				shortened: tempFileShort,
 				contents: new Buffer(tempFileContent),
 				stat: {
 					isDirectory: function () {
