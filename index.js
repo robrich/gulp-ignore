@@ -1,12 +1,10 @@
-/*jshint node:true */
-
 "use strict";
 
 var through = require('through2');
 var gulpmatch = require('gulp-match');
 
 var include = function(condition){
-	return through.obj(function (file, _, callback) {
+	return through.obj(function (file, enc, callback) {
 		if (gulpmatch(file,condition)) {
 			this.push(file);
 		}
@@ -15,7 +13,7 @@ var include = function(condition){
 };
 
 var exclude = function(condition){
-	return through.obj(function (file, _, callback) {
+	return through.obj(function (file, enc, callback) {
 		if (!gulpmatch(file,condition)) {
 			this.push(file);
 		}

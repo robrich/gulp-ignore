@@ -1,7 +1,7 @@
 gulp-ignore ![status](https://secure.travis-ci.org/robrich/gulp-ignore.png?branch=master)
 ===========
 
-Include or exclude [gulp](https://github.com/wearefractal/gulp) files from the stream based on a condition
+Include or exclude [gulp](https://github.com/gulpjs/gulp) files from the stream based on a condition
 
 Note
 ----
