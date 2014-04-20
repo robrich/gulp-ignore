@@ -3,46 +3,97 @@ gulp-ignore ![status](https://secure.travis-ci.org/robrich/gulp-ignore.png?branc
 
 Include or exclude [gulp](https://github.com/gulpjs/gulp) files from the stream based on a condition
 
-Note
-----
-
-`gulp.src()` now supports multiple globs including ignore globs.  See [glob-stream](https://github.com/wearefractal/glob-stream).  In most cases, this is sufficient, removing the need for this plugin.
-
-```javascript
-gulp.task('kill-js', function() {
-  gulp.src(['./**/*.js','!./node_modules/**','!./libs/**'])
-    .pipe(something());
-});
-```
-
 Usage
------
 
-Uglify everything but only copy certain things to the dist folder
+1: Exclude things from the stream
+
+**Exclude things from entering the stream**
+
+![][glob]
 
 ```javascript
-var exclude = require('gulp-ignore').exclude;
 var uglify = require('gulp-uglify');
 
 gulp.task('task', function() {
-  gulp.src('./src/*.js')
+  gulp.src(['./*.js', '!./node_modules/**'])
     .pipe(uglify())
-    .pipe(exclude('./libs/**'))
     .pipe(gulp.dest('./dist/'));
 });
 ```
 
+Grab all JavaScript files that aren't in the node_modules folder, uglify them, and write them.
+This is fastest because nothing in node_modules ever leaves `gulp.src()`
+
+
+2: Remove things from the stream
+
+**Remove from here on**
+
+![][exclude]
+
 ```javascript
-var include = require('gulp-ignore').include;
+var gulpIgnore = require('gulp-ignore');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+
+var condition = './gulpfile.js';
 
 gulp.task('task', function() {
-  gulp.src('./src/*.js')
+  gulp.src('./*.js')
+    .pipe(jshint())
+    .pipe(gulpIgnore.exclude(condition))
     .pipe(uglify())
-    .pipe(include('**/*.min.*'))
     .pipe(gulp.dest('./dist/'));
 });
 ```
+
+Run JSHint on everything, remove gulpfile from the stream, then uglify and write everything else.
+
+3: Filter only matching things
+
+**Include from here on**
+
+![][include]
+
+```javascript
+var gulpIgnore = require('gulp-ignore');
+var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+
+var condition = './public/**.js';
+
+gulp.task('task', function() {
+  gulp.src('./*.js')
+    .pipe(jshint())
+    .pipe(gulpIgnore.include(condition))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/'));
+});
+```
+
+Run JSHint on everything, filter to include only files from in the public folder, then uglify and write them.
+
+
+4: Conditionally filter content, include everything down-stream
+
+**Condition**
+
+![][condition]
+
+```javascript
+var gulpif = require('gulp-if');
+var uglify = require('gulp-uglify');
+
+var condition = true; // TODO: add business logic
+
+gulp.task('task', function() {
+  gulp.src('./src/*.js')
+    .pipe(gulpif(condition, uglify()))
+    .pipe(gulp.dest('./dist/'));
+});
+```
+Only uglify the content if the condition is true, but send all the files to the dist folder
+
 
 API
 ---
@@ -89,3 +140,9 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[condition]: https://rawgithub.com/robrich/gulp-ignore/master/img/condition.svg
+[ternary]: https://rawgithub.com/robrich/gulp-ignore/master/img/ternary.svg
+[exclude]: https://rawgithub.com/robrich/gulp-ignore/master/img/exclude.svg
+[include]: https://rawgithub.com/robrich/gulp-ignore/master/img/include.svg
+[glob]: https://rawgithub.com/robrich/gulp-ignore/master/img/glob.svg

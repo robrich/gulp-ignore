@@ -5,7 +5,6 @@
 var exclude = require('../');
 var fs = require('fs');
 var should = require('should');
-require('mocha');
 
 describe('gulp-filter', function() {
 	describe('exclude()', function() {
