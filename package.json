@@ -1,7 +1,7 @@
 {
   "name": "gulp-ignore",
   "description": "Include or exclude gulp files from the stream based on a condition",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "homepage": "https://github.com/robrich/gulp-ignore",
   "repository": "git://github.com/robrich/gulp-ignore.git",
   "author": "Rob Richardson (http://robrich.org/)",
@@ -15,13 +15,13 @@
     "gulp-filter"
   ],
   "dependencies": {
-    "through2": "^0.4.1",
-    "gulp-match": "^0.1.0"
+    "through2": "^0.5.1",
+    "gulp-match": "^0.2.0"
   },
   "devDependencies": {
-    "jshint": "^2.5.0",
-    "mocha": "^1.18.2",
-    "should": "^3.3.1"
+    "jshint": "^2.5.2",
+    "mocha": "^1.20.1",
+    "should": "^4.0.4"
   },
   "scripts": {
     "test": "mocha && jshint ./*.js && jshint ./test/*.js"
