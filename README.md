@@ -15,7 +15,7 @@ Usage
 var uglify = require('gulp-uglify');
 
 gulp.task('task', function() {
-  gulp.src(['./*.js', '!./node_modules/**'])
+  gulp.src(['./**/*.js', '!./node_modules/**'])
     .pipe(uglify())
     .pipe(gulp.dest('./dist/'));
 });
@@ -39,7 +39,7 @@ var jshint = require('gulp-jshint');
 var condition = './gulpfile.js';
 
 gulp.task('task', function() {
-  gulp.src('./*.js')
+  gulp.src('./**/*.js')
     .pipe(jshint())
     .pipe(gulpIgnore.exclude(condition))
     .pipe(uglify())
@@ -63,7 +63,7 @@ var jshint = require('gulp-jshint');
 var condition = './public/**.js';
 
 gulp.task('task', function() {
-  gulp.src('./*.js')
+  gulp.src('./**/*.js')
     .pipe(jshint())
     .pipe(gulpIgnore.include(condition))
     .pipe(uglify())
