@@ -16,7 +16,7 @@ describe('gulp-filter', function() {
 
 			var stream = exclude(); // don't filter anything
 			var fakeFile = {
-				path: tempFile,
+				relative: tempFile,
 				contents: new Buffer(tempFileContent)
 			};
 
@@ -24,9 +24,9 @@ describe('gulp-filter', function() {
 			stream.on('data', function(actualFile){
 				// Test that content passed through
 				should.exist(actualFile);
-				should.exist(actualFile.path);
+				should.exist(actualFile.relative);
 				should.exist(actualFile.contents);
-				actualFile.path.should.equal(tempFile);
+				actualFile.relative.should.equal(tempFile);
 				String(actualFile.contents).should.equal(tempFileContent);
 				done();
 			});
@@ -45,7 +45,7 @@ describe('gulp-filter', function() {
 
 			var stream = exclude('./nottemp.txt');
 			var fakeFile = {
-				path: tempFile,
+				relative: tempFile,
 				contents: new Buffer(tempFileContent)
 			};
 
@@ -72,7 +72,7 @@ describe('gulp-filter', function() {
 
 			var stream = exclude('./temp.txt');
 			var fakeFile = {
-				path: tempFile,
+				relative: tempFile,
 				contents: new Buffer(tempFileContent)
 			};
 
@@ -97,7 +97,7 @@ describe('gulp-filter', function() {
 
 			var stream = exclude({isFile:true});
 			var fakeFile = {
-				path: tempFile,
+				relative: tempFile,
 				contents: new Buffer(tempFileContent),
 				stat: {
 					isFolder: function () {
@@ -130,7 +130,7 @@ describe('gulp-filter', function() {
 
 			var stream = exclude({isDirectory:true});
 			var fakeFolder = {
-				path: tempFile,
+				relative: tempFile,
 				contents: new Buffer(tempFileContent),
 				stat: {
 					isDirectory: function () {
