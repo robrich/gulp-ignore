@@ -98,11 +98,11 @@ Only uglify the content if the condition is true, but send all the files to the 
 API
 ---
 
-### exclude(condition)
+### exclude(condition [, minimatchOptions])
 
 Exclude files whose `file.path` matches, include everything else
 
-### include(condition)
+### include(condition [, minimatchOptions])
 
 Include files whose `file.path` matches, exclude everything else
 
@@ -113,6 +113,10 @@ Type: `boolean` or [`stat`](http://nodejs.org/api/fs.html#fs_class_fs_stats) obj
 The condition parameter is any of the conditions supported by [gulp-match](https://github.com/robrich/gulp-match).  The `file.path` is passed into `gulp-match`.
 
 If a function is given, then the function is passed a vinyl `file`. The function should return a `boolean`.
+
+##### minimatchOptions
+
+Optional, if it's a glob condition, these options are passed to [https://github.com/isaacs/minimatch](minimatch).
 
 
 LICENSE

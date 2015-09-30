@@ -1,7 +1,7 @@
 {
   "name": "gulp-ignore",
   "description": "Include or exclude gulp files from the stream based on a condition",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/robrich/gulp-ignore",
   "repository": "git://github.com/robrich/gulp-ignore.git",
   "author": "Rob Richardson (http://robrich.org/)",

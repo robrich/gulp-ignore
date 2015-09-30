@@ -3,18 +3,18 @@
 var through = require('through2');
 var gulpmatch = require('gulp-match');
 
-var include = function(condition){
+var include = function(condition, minimatchOptions){
 	return through.obj(function (file, enc, callback) {
-		if (gulpmatch(file,condition)) {
+		if (gulpmatch(file, condition, minimatchOptions)) {
 			this.push(file);
 		}
 		return callback();
 	});
 };
 
-var exclude = function(condition){
+var exclude = function(condition, minimatchOptions){
 	return through.obj(function (file, enc, callback) {
-		if (!gulpmatch(file,condition)) {
+		if (!gulpmatch(file, condition, minimatchOptions)) {
 			this.push(file);
 		}
 		return callback();
