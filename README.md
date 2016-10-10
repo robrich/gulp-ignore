@@ -73,8 +73,9 @@ gulp.task('task', function() {
 
 Run JSHint on everything, filter to include only files from in the public folder, then uglify and write them.
 
+---
 
-4: Conditionally filter content, include everything down-stream
+If you want to conditionally filter content but include everything down-stream, use `gulp-if`. **`gulp-ignore` will remove files from the stream**
 
 **Condition**
 
@@ -92,7 +93,7 @@ gulp.task('task', function() {
     .pipe(gulp.dest('./dist/'));
 });
 ```
-Only uglify the content if the condition is true, but send all the files to the dist folder
+Only uglify the content if the condition is true, but send all the files to the dist folder.  
 
 
 API
