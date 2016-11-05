@@ -81,7 +81,7 @@ Run JSHint on everything, filter to include only files from in the public folder
 ![][condition]
 
 ```javascript
-var gulpif = require('gulp-if');
+var gulpif = require('gulp-if'); // This is gulp-if, not gulp-ignore
 var uglify = require('gulp-uglify');
 
 var condition = true; // TODO: add business logic
@@ -92,7 +92,7 @@ gulp.task('task', function() {
     .pipe(gulp.dest('./dist/'));
 });
 ```
-Only uglify the content if the condition is true, but send all the files to the dist folder
+Only uglify the content if the condition is true, but send all the files to the dist folder.
 
 
 API
