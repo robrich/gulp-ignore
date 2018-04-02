@@ -84,7 +84,10 @@ Run JSHint on everything, filter to include only files from in the public folder
 var gulpif = require('gulp-if'); // This is gulp-if, not gulp-ignore
 var uglify = require('gulp-uglify');
 
-var condition = true; // TODO: add business logic
+var condition = function(file) {
+  // Only files whose contents match a pattern
+  return /a pattern/g.test(String(file.contents));
+};
 
 gulp.task('task', function() {
   gulp.src('./src/*.js')
